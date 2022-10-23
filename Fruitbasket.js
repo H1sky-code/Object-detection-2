@@ -1,0 +1,30 @@
+Status = "";
+Bedroom_image = "";
+
+function preload(){
+    Bedroom_image = loadImage("https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1612205695-web_orchard_celebration_amazon.jpg?crop=1xw:1.00xh;center,top&resize=480:*");
+}
+
+function setup(){
+    canvas = createCanvas(640,350);
+    canvas.position(315,200);
+    object_detector = ml5.objectDetector('cocossd',modelLoaded);
+    document.getElementById("status").innerHTML = "Status: Detecting Objects";
+}
+
+function modelLoaded(){
+    console.log("Model Loaded!");
+    Status = true;
+    object_Detector.detect(Bedroom_image,gotResults);
+}
+
+function gotResults(results,error) {
+    if(error){
+        console.error(error);
+    }
+    console.log(results);
+}
+
+function draw(){
+    image(Bedroom_image,0,0,640,350);
+} 
